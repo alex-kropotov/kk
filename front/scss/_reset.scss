@@ -1,0 +1,14 @@
+html {
+  //font: 13px/1.15 OpenSans, Arial, Helvetica, sans-serif;
+  //font: 13px/1.15 RobotoCond, Arial, Helvetica, sans-serif;
+  //font: 14px/1.15 Roboto, Arial, Helvetica, sans-serif;
+  //font-size: 87.5%; // 14px = 87.5% от 16px
+  overflow-y: scroll;
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+/*
+  8. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}

@@ -1,0 +1,42 @@
+{
+    "name": "sas/kk",
+    "description": "KK",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "ak686",
+            "email": "ak686@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.6",
+        "php-di/php-di": "^7.0",
+        "ext-pdo": "*",
+        "devcoder-xyz/php-dotenv": "^2.1",
+        "filp/whoops": "^2.15",
+        "symfony/uid": "^7.1",
+        "robinvdvleuten/ulid": "^5.0",
+        "phayes/geophp": "^1.2",
+        "odan/session": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "back",
+            "Tools\\": "tools"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.3"
+    },
+    "scripts": {
+        "d_start": "docker-compose up -d",
+        "d_stop": "docker-compose down"
+    }
+}
