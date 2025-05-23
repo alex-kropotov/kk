@@ -12,4 +12,5 @@ return [
     \App\Feature\Admin\Auth\Api\Logout\AdminAuthLogoutApiCommand::class => \App\Feature\Admin\Auth\Api\Logout\AdminAuthLogoutApiHandler::class,
     \App\Feature\Admin\Auth\View\LoginForm\AdminAuthLoginFormViewCommand::class => \App\Feature\Admin\Auth\View\LoginForm\AdminAuthLoginFormViewHandler::class,
     \App\Feature\Admin\Layout\View\HomePage\AdminLayoutHomePageViewCommand::class => \App\Feature\Admin\Layout\View\HomePage\AdminLayoutHomePageViewHandler::class,
+    \App\Feature\User\Layout\View\UserHomePage\UserLayoutUserHomePageViewCommand::class => \App\Feature\User\Layout\View\UserHomePage\UserLayoutUserHomePageViewHandler::class,
 ];

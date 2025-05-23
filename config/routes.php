@@ -6,6 +6,7 @@ use App\Feature\Admin\Auth\Api\LoginCheck\AdminAuthLoginCheckApiController;
 use App\Feature\Admin\Auth\Api\Logout\AdminAuthLogoutApiController;
 use App\Feature\Admin\Auth\View\LoginForm\AdminAuthLoginFormViewController;
 use App\Feature\Admin\Layout\View\HomePage\AdminLayoutHomePageViewController;
+use App\Feature\User\Layout\View\UserHomePage\UserLayoutUserHomePageViewController;
 use Slim\App;
 use Tools\Services\SessionService;
 
@@ -28,10 +29,7 @@ return function (App $app) {
         $group->group('/admin', function ($group) {
             $group->post('/login', AdminAuthLoginCheckApiController::class);
         });
-        $group->group('/users', function ($group) {
-            $group->post('/login', ApiUserHandler::class.':login');
-            $group->post('/logout', ApiUserHandler::class.':logout');
-        });
     });
 
+    $app->get('/', UserLayoutUserHomePageViewController::class);
 };

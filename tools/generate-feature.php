@@ -24,21 +24,6 @@ function generate(string $inputPath, string $type): void {
         throw new InvalidArgumentException("Input must be at least Interface/Feature (e.g. Admin/Login)");
     }
 
-//    $interface = array_shift($parts);
-//    $feature = studly(implode('', $parts));
-//    $classPrefix = $interface . $feature;
-//
-//
-//    $fullPath = BASE_DIR . '/' . $interface . '/' . implode('/', $parts) . '/' . ucfirst($type);
-//
-//    if (is_dir($fullPath)) {
-//        echo "❌ Feature '$inputPath' уже существует по пути '$fullPath'. Ничего не создано.\n";
-//        return;
-//    }
-//
-//
-//    $namespace = NAMESPACE_ROOT . '\\' . $interface . '\\' . implode('\\', $parts) . '\\' . ucfirst($type);
-
     $interface = array_shift($parts); // Admin
     $featureName = array_pop($parts); // LoginForm или LoginCheck
     $groupPath = implode('/', $parts); // Auth
@@ -176,7 +161,9 @@ use Tools\CommandBus\CommandInterface;
 #[AsCommandHandler($commandClass::class)]
 readonly class $className implements CommandHandlerInterface
 {
-    public function __construct() {}
+    public function __construct(
+        private ViewRenderer $renderer
+    ) {}
 
     public function handle(CommandInterface \$command): CommandHandlerResultInterface
     {
