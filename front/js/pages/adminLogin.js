@@ -71,7 +71,6 @@ class AdminLogin {
             name: this.usernameInput.value.trim(),
             pass: this.passwordInput.value.trim(),
         };
-        const str = JSON.stringify(payload);
 
         try {
             const response = await fetch('/api/admin/login', {
@@ -79,8 +78,7 @@ class AdminLogin {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                // body: JSON.stringify(payload),
-                body: str,
+                body: JSON.stringify(payload),
             });
 
 

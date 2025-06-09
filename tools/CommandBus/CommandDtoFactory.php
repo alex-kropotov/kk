@@ -2,6 +2,7 @@
 
 namespace Tools\CommandBus;
 
+use BackedEnum;
 use DateTime;
 use ReflectionClass;
 use ReflectionException;
@@ -9,7 +10,7 @@ use ReflectionNamedType;
 use ReflectionParameter;
 use RuntimeException;
 
-use function PHPUnit\Framework\isNull;
+use ValueError;
 
 class CommandDtoFactory
 {
@@ -74,6 +75,19 @@ class CommandDtoFactory
                     continue;
                 }
 
+                if (enum_exists($typeName)) {
+                    if (is_subclass_of($typeName, BackedEnum::class)) {
+                        try {
+                            $args[] = $typeName::from($value); // string/int → enum
+                        } catch (ValueError $e) {
+                            throw new RuntimeException("Invalid value for enum '{$name}': '{$value}'");
+                        }
+                        continue;
+                    }
+
+                    throw new RuntimeException("Unsupported enum type for '{$name}'");
+                }
+
                 if (class_exists($typeName)) {
                     if (is_array($value)) {
                         if (self::isAssoc($value)) {
@@ -87,11 +101,13 @@ class CommandDtoFactory
                     }
                 }
 
-                if (!self::validatePrimitiveType($value, $typeName)) {
-                    throw new RuntimeException("Invalid type for parameter '{$name}': expected {$typeName}, got " . gettype($value));
-                }
+//                if (!self::validatePrimitiveType($value, $typeName)) {
+//                    throw new RuntimeException("Invalid type for parameter '{$name}': expected {$typeName}, got " . gettype($value));
+//                }
+//
+//                $args[] = $value;
 
-                $args[] = $value;
+                $args[] = self::castPrimitiveType($value, $typeName);
             } else {
                 $args[] = $value;
             }
@@ -113,6 +129,26 @@ class CommandDtoFactory
             'string' => is_string($value),
             'bool' => is_bool($value),
             default => false,
+        };
+    }
+
+    private static function castPrimitiveType(mixed $value, string $expectedType): mixed
+    {
+        return match ($expectedType) {
+            'int' => is_numeric($value) ? (int)$value : throw new RuntimeException("Expected int, got " . gettype($value)),
+            'float' => is_numeric($value) ? (float)$value : throw new RuntimeException("Expected float, got " . gettype($value)),
+            'string' => is_scalar($value) || $value === null ? (string)$value : throw new RuntimeException("Expected string, got " . gettype($value)),
+            'bool' => match (true) {
+                is_bool($value) => $value,
+                is_numeric($value) => (bool)$value,
+                is_string($value) => match (strtolower($value)) {
+                    '1', 'true', 'yes', 'on' => true,
+                    '0', 'false', 'no', 'off' => false,
+                    default => throw new RuntimeException("Cannot cast '{$value}' to bool")
+                },
+                default => throw new RuntimeException("Expected bool, got " . gettype($value))
+            },
+            default => throw new RuntimeException("Unknown primitive type: {$expectedType}"),
         };
     }
 }

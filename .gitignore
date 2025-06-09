@@ -11,6 +11,8 @@ composer.lock
 /_docs/
 /app/
 /backend-php/
+/front/assets/img/propertis/
+/front/assets/img/rooms/
 
 
 /apache-logs

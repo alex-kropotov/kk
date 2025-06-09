@@ -78,6 +78,7 @@ export default defineConfig({
       input: {
         app: resolve(__dirname, 'front/app.js'),
         admin: path.resolve(__dirname, 'front/js/pages/adminLogin.js'),
+        adminPropertyEdit: path.resolve(__dirname, 'front/js/pages/adminPropertyEdit.js'),
       },
       output: {
         dir: 'public',

@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 
 declare(strict_types=1);
@@ -25,32 +24,25 @@ function generate(string $inputPath, string $type): void {
     }
 
     $interface = array_shift($parts); // Admin
-    $featureName = array_pop($parts); // LoginForm или LoginCheck
-    $groupPath = implode('/', $parts); // Auth
-    $groupNamespace = implode('\\', $parts); // Auth
+    $featureName = array_pop($parts); // Login
     $typeDir = ucfirst($type); // View или Api
 
     $feature = studly($featureName);
-    $classPrefix = $interface . studly($groupNamespace . $feature);
+    $classPrefix = $interface . $feature;
 
-    // Папка: back/Feature/Admin/Auth/View/LoginForm
+    // Папка: back/Feature/Admin/View/Login
     $fullPath = BASE_DIR . '/' . $interface
-        . ($groupPath ? '/' . $groupPath : '')
         . '/' . $typeDir
         . '/' . $feature;
 
-    // Неймспейс: App\Feature\Admin\Auth\View\LoginForm
+    // Неймспейс: App\Feature\Admin\View\Login
     $namespace = NAMESPACE_ROOT . '\\' . $interface
-        . ($groupNamespace ? '\\' . $groupNamespace : '')
         . '\\' . $typeDir
         . '\\' . $feature;
-
 
     if (!is_dir($fullPath)) {
         mkdir($fullPath, 0777, true);
     }
-
-
 
     // Command
     $commandClass = $classPrefix . getTypeSuffix($type) . 'Command';
@@ -162,7 +154,7 @@ use Tools\CommandBus\CommandInterface;
 readonly class $className implements CommandHandlerInterface
 {
     public function __construct(
-        private ViewRenderer $renderer
+        private ViewRenderer \$renderer
     ) {}
 
     public function handle(CommandInterface \$command): CommandHandlerResultInterface
@@ -172,13 +164,13 @@ readonly class $className implements CommandHandlerInterface
 }
 PHP;
 }
-// php tools/generate-feature.php Admin/Auth/Login api
+
+// php tools/generate-feature.php Admin/Login api
 // Run script
 $argv = $_SERVER['argv'];
 if (count($argv) !== 3) {
-    echo "Usage: php generate-feature.php Interface/Path/To/Feature api|view\n";
+    echo "Usage: php generate-feature.php Interface/Feature api|view\n";
     exit(1);
 }
 
 generate($argv[1], strtolower($argv[2]));
-

@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+use App\Bootstrap\Middleware\Route\ContainerMiddleware;
 use App\Bootstrap\Middleware\Route\CurrentPageMiddleware;
 use App\Bootstrap\Middleware\Route\SessionMiddleware;
 use App\Render\NotFound\NotFoundRender;
+use Dotenv\Dotenv;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Factory\AppFactory;
 use Slim\Middleware\BodyParsingMiddleware;
@@ -13,6 +15,9 @@ use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
 require dirname($_SERVER['DOCUMENT_ROOT']) . '/vendor/autoload.php';
+
+$dotenv = Dotenv::createImmutable(dirname($_SERVER['DOCUMENT_ROOT']) . '/', '.env.dev');
+$dotenv->load();
 
 $whoops = new Run();
 $whoops->pushHandler(new PrettyPageHandler());
@@ -68,6 +73,9 @@ $app->add(SessionMiddleware::class);
 
 // 5. CurrentPageMiddleware (расбираем URI->path)
 $app->add(CurrentPageMiddleware::class);
+
+// 6. ContainerMiddleware - ВАЖНО: добавляем ПОСЛЕДНИМ, чтобы выполнялся ПЕРВЫМ
+$app->add(ContainerMiddleware::class);
 
 $routes = require dirname($_SERVER['DOCUMENT_ROOT']) .'/config/routes.php';
 //$routes = require '../config/routes.php';

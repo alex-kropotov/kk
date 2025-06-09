@@ -8,9 +8,12 @@
 declare(strict_types=1);
 
 return [
-    \App\Feature\Admin\Auth\Api\LoginCheck\AdminAuthLoginCheckApiCommand::class => \App\Feature\Admin\Auth\Api\LoginCheck\AdminAuthLoginCheckApiHandler::class,
-    \App\Feature\Admin\Auth\Api\Logout\AdminAuthLogoutApiCommand::class => \App\Feature\Admin\Auth\Api\Logout\AdminAuthLogoutApiHandler::class,
-    \App\Feature\Admin\Auth\View\LoginForm\AdminAuthLoginFormViewCommand::class => \App\Feature\Admin\Auth\View\LoginForm\AdminAuthLoginFormViewHandler::class,
-    \App\Feature\Admin\Layout\View\HomePage\AdminLayoutHomePageViewCommand::class => \App\Feature\Admin\Layout\View\HomePage\AdminLayoutHomePageViewHandler::class,
-    \App\Feature\User\Layout\View\UserHomePage\UserLayoutUserHomePageViewCommand::class => \App\Feature\User\Layout\View\UserHomePage\UserLayoutUserHomePageViewHandler::class,
+    \App\Feature\Admin\Api\CitySearch\AdminCitySearchApiCommand::class => \App\Feature\Admin\Api\CitySearch\AdminCitySearchApiHandler::class,
+    \App\Feature\Admin\Api\LoginCheck\AdminLoginCheckApiCommand::class => \App\Feature\Admin\Api\LoginCheck\AdminLoginCheckApiHandler::class,
+    \App\Feature\Admin\Api\Logout\AdminLogoutApiCommand::class => \App\Feature\Admin\Api\Logout\AdminLogoutApiHandler::class,
+    \App\Feature\Admin\View\Home\AdminHomeViewCommand::class => \App\Feature\Admin\View\Home\AdminHomeViewHandler::class,
+    \App\Feature\Admin\View\LoginForm\AdminLoginFormViewCommand::class => \App\Feature\Admin\View\LoginForm\AdminLoginFormViewHandler::class,
+    \App\Feature\Admin\View\Properties\AdminPropertiesViewCommand::class => \App\Feature\Admin\View\Properties\AdminPropertiesViewHandler::class,
+    \App\Feature\Admin\View\PropertyEdit\AdminPropertyEditViewCommand::class => \App\Feature\Admin\View\PropertyEdit\AdminPropertyEditViewHandler::class,
+    \App\Feature\User\View\Home\UserHomeViewCommand::class => \App\Feature\User\View\Home\UserHomeViewHandler::class,
 ];

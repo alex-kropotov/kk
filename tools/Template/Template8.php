@@ -135,7 +135,8 @@
         //	remove extra mark function ---------------------------------------------
         private function _remove_marks(): static
         {
-            $this->page = preg_replace("/\{[A-Z][A-Z0-9_]*?\}/m", '', $this->page);
+//            $this->page = preg_replace("/\{[A-Z][A-Z0-9_]*?\}/m", '', $this->page);
+            $this->page = preg_replace("/\{[a-zA-Z0-9_]+\}/m", '', $this->page);
             $this->page = preg_replace("/<!--([\s\S]*?)-->/mi", '', $this->page);
             return $this;
         }

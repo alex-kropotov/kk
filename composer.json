@@ -19,7 +19,11 @@
         "symfony/uid": "^7.1",
         "robinvdvleuten/ulid": "^5.0",
         "phayes/geophp": "^1.2",
-        "odan/session": "^6.3"
+        "odan/session": "^6.3",
+        "illuminate/database": "^12.15",
+        "illuminate/events": "^12.15",
+        "firebase/php-jwt": "^6.11",
+        "vlucas/phpdotenv": "^5.6"
     },
     "autoload": {
         "psr-4": {

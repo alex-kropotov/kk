@@ -3,12 +3,16 @@ services:
   kk_app:
     build: .
     container_name: kk_php82_mysql57
+    environment:
+      - TZ=Europe/Belgrade
     ports:
       - "8083:80"
     volumes:
       #      - ./www:/var/www/html
       - ./:/var/site
       - ./apache-logs:/var/log/apache2  # монтируем директорию на хосте для логов
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     depends_on:
       - mysql
 
@@ -21,7 +25,15 @@ services:
       MYSQL_DATABASE: kc
       MYSQL_USER: kc
       MYSQL_PASSWORD: kc
+      MYSQL_CHARACTER_SET_SERVER: utf8mb4
+      MYSQL_COLLATION_SERVER: utf8mb4_general_ci
     ports:
       - "3312:3306"
     volumes:
       - D:\work\kk\docker_db:/var/lib/mysql
+      - ./mysql-config.cnf:/etc/mysql/conf.d/charset.cnf  # монтируем конфигурационный файл
+    command: [
+      "--character-set-server=utf8mb4",
+      "--collation-server=utf8mb4_general_ci",
+      "--character-set-client-handshake=FALSE"
+    ]

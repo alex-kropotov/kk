@@ -6,6 +6,7 @@ import 'swiper/swiper-bundle.css'
 import './scss/main.scss'
 
 import './js/common/common.js'
+// import './js/common/autocomplete.js'
 
 
 
